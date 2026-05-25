@@ -45,20 +45,21 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 .pill-group{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
 .pill{padding:8px 16px;border-radius:60px;font-family:'Nunito Sans',sans-serif;font-size:0.75rem;font-weight:600;letter-spacing:0.5px;border:1px solid var(--border2);background:transparent;color:var(--text3);cursor:pointer;transition:all 0.2s;}
 .pill.active{background:var(--btn-bg);color:var(--btn-fg);border-color:transparent;}
-/* ── IMAGE UPLOAD ZONE ── */
 .upload-mode-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px;}
-.mode-tab{padding:12px 8px;border-radius:14px;border:1px solid var(--border2);background:transparent;color:var(--text3);font-family:'Nunito Sans',sans-serif;font-size:0.75rem;font-weight:600;letter-spacing:0.5px;cursor:pointer;transition:all 0.2s;text-align:center;}
+.mode-tab{padding:12px 8px;border-radius:14px;border:1px solid var(--border2);background:transparent;color:var(--text3);font-family:'Nunito Sans',sans-serif;font-size:0.75rem;font-weight:600;cursor:pointer;transition:all 0.2s;text-align:center;}
 .mode-tab.active{background:var(--btn-bg);color:var(--btn-fg);border-color:transparent;}
-.upload-zone{border:1.5px dashed var(--border2);border-radius:16px;padding:28px 20px;text-align:center;cursor:pointer;transition:border-color 0.2s,background 0.2s;margin-bottom:8px;position:relative;}
+/* Upload zone — square preview */
+.upload-zone{border:1.5px dashed var(--border2);border-radius:16px;padding:28px 20px;text-align:center;cursor:pointer;transition:border-color 0.2s,background 0.2s;margin-bottom:8px;position:relative;overflow:hidden;}
 .upload-zone:hover{border-color:var(--gold);background:rgba(184,134,11,0.04);}
-.upload-zone.has-img{border-style:solid;border-color:var(--gold);padding:0;overflow:hidden;}
-.upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.upload-zone.has-img{border-style:solid;border-color:var(--gold);padding:0;}
+.upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:1;}
 .upload-icon{font-size:1.8rem;margin-bottom:8px;line-height:1;}
 .upload-label{font-family:'Space Mono',monospace;font-size:0.52rem;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin-bottom:4px;}
 .upload-hint{font-size:0.68rem;font-weight:300;color:var(--text3);}
-.preview-img{width:100%;height:200px;object-fit:cover;display:block;}
-.remove-img-btn{position:absolute;top:8px;right:8px;width:28px;height:28px;border-radius:50%;background:rgba(0,0,0,0.6);color:#fff;border:none;cursor:pointer;font-size:0.8rem;display:flex;align-items:center;justify-content:center;z-index:2;}
-/* ── GARNISH ── */
+/* Square preview — 1:1 aspect ratio */
+.preview-wrap{position:relative;width:100%;aspect-ratio:1/1;}
+.preview-img{width:100%;height:100%;object-fit:cover;display:block;}
+.remove-img-btn{position:absolute;top:10px;right:10px;width:32px;height:32px;border-radius:50%;background:rgba(0,0,0,0.65);color:#fff;border:none;cursor:pointer;font-size:0.85rem;display:flex;align-items:center;justify-content:center;z-index:3;line-height:1;}
 .garnish-group{margin-bottom:18px;}
 .garnish-group-title{font-family:'Space Mono',monospace;font-size:0.48rem;letter-spacing:2px;color:var(--text3);text-transform:uppercase;margin-bottom:8px;}
 .garnish-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:4px;}
@@ -67,22 +68,23 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 body.dark .chk-item:hover{background:rgba(255,255,255,0.06);}
 .chk-item input[type=checkbox]{width:16px;height:16px;accent-color:var(--text);flex-shrink:0;cursor:pointer;margin:0;}
 .chk-item span{font-size:0.75rem;font-weight:300;color:var(--text2);line-height:1.3;}
-/* ── LOADING ── */
 .loading-wrap{text-align:center;padding:40px 0;}
 .spinner{width:38px;height:38px;border:2px solid var(--border2);border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 24px;}
 @keyframes spin{to{transform:rotate(360deg);}}
 .loading-step{font-family:'Space Mono',monospace;font-size:0.52rem;letter-spacing:3px;color:var(--text3);text-transform:uppercase;}
 .loading-sub{font-size:0.65rem;font-weight:300;color:var(--text3);margin-top:8px;}
-/* ── A6 CARD ── */
+/* A6 card */
 .card-preview-wrap{display:flex;justify-content:center;padding:16px 0 8px;}
 .a6-card{width:310px;min-height:437px;border-radius:10px;overflow:hidden;box-shadow:0 12px 48px rgba(0,0,0,0.2),0 2px 6px rgba(0,0,0,0.1);background:#ffffff;flex-shrink:0;font-family:'Nunito Sans',sans-serif;display:flex;flex-direction:column;}
-.card-img{width:100%;height:210px;object-fit:cover;display:block;flex-shrink:0;}
-.card-img-placeholder{width:100%;height:210px;background:linear-gradient(135deg,#111,#1e1e1e);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+/* Square image on card — 1:1 */
+.card-img-wrap{width:100%;aspect-ratio:1/1;flex-shrink:0;overflow:hidden;}
+.card-img{width:100%;height:100%;object-fit:cover;display:block;}
+.card-img-placeholder{width:100%;aspect-ratio:1/1;background:linear-gradient(135deg,#111,#1e1e1e);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .card-body{padding:13px 15px 8px;flex:1;}
 .card-outlet-badge{font-family:'Space Mono',monospace;font-size:0.4rem;letter-spacing:2.5px;text-transform:uppercase;color:#86868b;margin-bottom:3px;}
 .card-dish-name{font-weight:200;font-size:1.2rem;letter-spacing:3px;text-transform:uppercase;color:#1d1d1f;line-height:1.15;margin-bottom:5px;}
 .card-gold-rule{height:1px;background:linear-gradient(to right,#b8860b 40%,transparent);margin:6px 0;}
-.card-meta-row{display:flex;gap:16px;margin-bottom:7px;}
+.card-meta-row{display:flex;gap:16px;margin-bottom:7px;flex-wrap:wrap;}
 .card-meta-label{font-family:'Space Mono',monospace;font-size:0.37rem;letter-spacing:2px;text-transform:uppercase;color:#86868b;display:block;margin-bottom:1px;}
 .card-meta-value{font-size:0.6rem;font-weight:600;color:#1d1d1f;}
 .card-garnish-pills{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:7px;}
@@ -91,7 +93,6 @@ body.dark .chk-item:hover{background:rgba(255,255,255,0.06);}
 .card-footer{display:flex;justify-content:space-between;align-items:center;padding:7px 15px;background:#1d1d1f;flex-shrink:0;}
 .card-footer-brand{font-weight:200;font-size:0.58rem;letter-spacing:4px;text-transform:uppercase;color:#f5f5f7;}
 .card-footer-cat{font-family:'Space Mono',monospace;font-size:0.38rem;letter-spacing:2px;text-transform:uppercase;color:#86868b;}
-/* ── MISC ── */
 .conn-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:40px;font-family:'Space Mono',monospace;font-size:0.48rem;letter-spacing:2px;text-transform:uppercase;}
 .conn-badge.ok{background:rgba(34,197,94,0.12);color:#16a34a;border:1px solid rgba(34,197,94,0.25);}
 .conn-badge.err{background:rgba(220,38,38,0.08);color:#dc2626;border:1px solid rgba(220,38,38,0.2);}
@@ -101,7 +102,8 @@ body.dark .chk-item:hover{background:rgba(255,255,255,0.06);}
 .err-msg{background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.2);border-radius:12px;padding:12px 16px;font-size:0.75rem;color:#dc2626;margin-top:12px;display:none;line-height:1.5;}
 .err-msg.on{display:block;}
 .hint-text{font-size:0.72rem;font-weight:300;color:var(--text3);margin-bottom:16px;line-height:1.6;}
-/* ── PRINT ── */
+.sheet-link{font-family:'Space Mono',monospace;font-size:0.52rem;letter-spacing:2px;color:var(--gold);text-decoration:none;text-transform:uppercase;}
+.sheet-link:hover{text-decoration:underline;}
 @media print{
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
   body>*{display:none!important;}
@@ -109,31 +111,27 @@ body.dark .chk-item:hover{background:rgba(255,255,255,0.06);}
   @page{size:105mm 148mm;margin:0;}
   #print-area{width:105mm;height:148mm;overflow:hidden;margin:0;padding:0;}
   #print-area .a6-card{width:105mm!important;min-height:0!important;height:148mm!important;border-radius:0!important;box-shadow:none!important;}
-  #print-area .card-img,#print-area .card-img-placeholder{height:68mm!important;}
-  #print-area .card-body{padding:3.5mm 4.5mm 2mm!important;}
-  #print-area .card-dish-name{font-size:5.2mm!important;letter-spacing:1.2mm!important;}
-  #print-area .card-outlet-badge{font-size:1.8mm!important;letter-spacing:1mm!important;}
-  #print-area .card-meta-label{font-size:1.6mm!important;}
-  #print-area .card-meta-value{font-size:2.2mm!important;}
-  #print-area .card-garnish-pill{font-size:1.7mm!important;padding:0.4mm 1.8mm!important;}
-  #print-area .card-instruction{font-size:2mm!important;line-height:1.5!important;}
-  #print-area .card-footer{padding:2mm 4.5mm!important;}
-  #print-area .card-footer-brand{font-size:2.5mm!important;letter-spacing:1.5mm!important;}
-  #print-area .card-footer-cat{font-size:1.6mm!important;}
+  #print-area .card-img-wrap{aspect-ratio:1/1!important;}
+  #print-area .card-body{padding:2.5mm 4mm 1.5mm!important;}
+  #print-area .card-dish-name{font-size:4.8mm!important;letter-spacing:1mm!important;}
+  #print-area .card-outlet-badge{font-size:1.6mm!important;}
+  #print-area .card-meta-label{font-size:1.5mm!important;}
+  #print-area .card-meta-value{font-size:2mm!important;}
+  #print-area .card-garnish-pill{font-size:1.5mm!important;padding:0.3mm 1.5mm!important;}
+  #print-area .card-instruction{font-size:1.9mm!important;line-height:1.5!important;}
+  #print-area .card-footer{padding:2mm 4mm!important;}
+  #print-area .card-footer-brand{font-size:2.2mm!important;letter-spacing:1.5mm!important;}
+  #print-area .card-footer-cat{font-size:1.5mm!important;}
 }
 #print-area{display:none;}
 </style>
 </head>
 <body class="light">
-
 <div class="bg-layer">
-  <div class="bg-orb orb1"></div>
-  <div class="bg-orb orb2"></div>
-  <div class="bg-orb orb3"></div>
+  <div class="bg-orb orb1"></div><div class="bg-orb orb2"></div><div class="bg-orb orb3"></div>
 </div>
-
 <button class="theme-btn" onclick="toggleTheme()" id="theme-btn" aria-label="Toggle theme">☀</button>
-<button class="settings-btn" onclick="showView('view-setup')" title="Backend settings">⚙</button>
+<button class="settings-btn" onclick="showView('view-setup')" title="Settings">⚙</button>
 
 <div class="app">
   <header class="hdr">
@@ -146,25 +144,23 @@ body.dark .chk-item:hover{background:rgba(255,255,255,0.06);}
   <div id="view-setup" class="view active">
     <div class="glass-card">
       <p class="section-label">◈ Backend Setup</p>
-      <p class="hint-text">Paste your Google Apps Script web app URL. All API keys stay on the server — never in the browser.</p>
+      <p class="hint-text">Paste your Apps Script URL once. All API keys stay on the server.</p>
       <label class="field-label">Apps Script Web App URL</label>
       <input type="text" id="gas-url" placeholder="https://script.google.com/macros/s/…/exec" autocomplete="off" spellcheck="false">
       <div id="conn-status" style="margin-bottom:16px;display:none;">
-        <span id="conn-badge" class="conn-badge ok">
-          <span class="conn-dot"></span>
-          <span id="conn-text">Connected</span>
-        </span>
+        <span id="conn-badge" class="conn-badge ok"><span class="conn-dot"></span><span id="conn-text">Connected</span></span>
       </div>
       <div id="setup-error" class="err-msg"></div>
       <button class="btn" onclick="testAndSave()" id="save-btn">Test Connection &amp; Save</button>
     </div>
     <div class="glass-card">
-      <p class="section-label">◈ How to Deploy</p>
+      <p class="section-label">◈ Quick Setup Guide</p>
       <p class="hint-text">
         <strong style="font-weight:600;color:var(--text);">1.</strong> script.google.com → New Project → paste <code style="font-size:0.68rem;">heebee-plating-backend.gs</code><br>
-        <strong style="font-weight:600;color:var(--text);">2.</strong> ⚙ Script Properties → Add: <code style="font-size:0.65rem;">OPENAI_KEY · ANTHROPIC_KEY · IMAGE_MODEL · IMAGE_QUALITY</code><br>
+        <strong style="font-weight:600;color:var(--text);">2.</strong> ⚙ Script Properties → Add: OPENAI_KEY · ANTHROPIC_KEY · IMAGE_MODEL · IMAGE_QUALITY<br>
         <strong style="font-weight:600;color:var(--text);">3.</strong> Deploy → Web App → Execute as: Me · Anyone → Copy /exec URL<br>
-        <strong style="font-weight:600;color:var(--text);">4.</strong> Paste above → Test Connection
+        <strong style="font-weight:600;color:var(--text);">4.</strong> Paste above → Test Connection<br><br>
+        <strong style="font-weight:600;color:var(--text);">Sheet:</strong> Auto-created as "Heebee Plating Log" in your Google Drive on first card.
       </p>
     </div>
   </div>
@@ -172,33 +168,32 @@ body.dark .chk-item:hover{background:rgba(255,255,255,0.06);}
   <!-- ══ VIEW 2 — FORM ══ -->
   <div id="view-form" class="view">
 
-    <!-- IMAGE MODE -->
+    <!-- IMAGE -->
     <div class="glass-card">
       <p class="section-label">◈ Dish Image</p>
-
       <div class="upload-mode-tabs">
         <button class="mode-tab active" id="tab-upload" onclick="setMode('upload')">📷 Upload &amp; Enhance</button>
         <button class="mode-tab" id="tab-generate" onclick="setMode('generate')">✦ AI Generate</button>
       </div>
 
-      <!-- Upload zone -->
       <div id="upload-panel">
-        <p class="hint-text">Take a photo of the plated dish → OpenAI enhances it to professional food photography quality.</p>
+        <p class="hint-text">Upload your real dish photo. OpenAI enhances it to professional food photography — cropped square automatically.</p>
         <div class="upload-zone" id="upload-zone">
           <input type="file" id="photo-input" accept="image/jpeg,image/png,image/webp" onchange="handlePhotoSelect(event)">
           <div id="upload-empty">
             <div class="upload-icon">⊕</div>
             <p class="upload-label">Tap to upload dish photo</p>
-            <p class="upload-hint">JPG · PNG · WEBP · max 10MB</p>
+            <p class="upload-hint">JPG · PNG · WEBP · auto-cropped to square</p>
           </div>
-          <img id="photo-preview" class="preview-img" style="display:none;" alt="Dish preview">
-          <button class="remove-img-btn" id="remove-img-btn" style="display:none;" onclick="removePhoto(event)">✕</button>
+          <div id="preview-wrap" class="preview-wrap" style="display:none;">
+            <img id="photo-preview" class="preview-img" alt="Dish preview">
+            <button class="remove-img-btn" onclick="removePhoto(event)">✕</button>
+          </div>
         </div>
       </div>
 
-      <!-- Generate panel -->
       <div id="generate-panel" style="display:none;">
-        <p class="hint-text">No photo? OpenAI generates a realistic image from your dish details and garnish selections below.</p>
+        <p class="hint-text">OpenAI generates a realistic square food photo from your dish details and garnish selections below.</p>
       </div>
     </div>
 
@@ -207,7 +202,6 @@ body.dark .chk-item:hover{background:rgba(255,255,255,0.06);}
       <p class="section-label">◈ Dish Details</p>
       <label class="field-label">Dish / Item Name</label>
       <input type="text" id="dish-name" placeholder="e.g. Truffle Mushroom Pasta" maxlength="60">
-
       <label class="field-label">Category</label>
       <div class="pill-group" id="cat-pills">
         <button class="pill active" data-val="Food" onclick="selPill(this,'cat-pills')">Food</button>
@@ -216,7 +210,6 @@ body.dark .chk-item:hover{background:rgba(255,255,255,0.06);}
         <button class="pill" data-val="Snack" onclick="selPill(this,'cat-pills')">Snack</button>
         <button class="pill" data-val="Breakfast" onclick="selPill(this,'cat-pills')">Breakfast</button>
       </div>
-
       <label class="field-label">Crockery / Vessel</label>
       <select id="crockery">
         <option>Round White Plate</option><option>Oval Plate</option><option>Deep Pasta Bowl</option>
@@ -225,7 +218,6 @@ body.dark .chk-item:hover{background:rgba(255,255,255,0.06);}
         <option>Ceramic Ramekin</option><option>Iron Skillet</option><option>Bamboo Basket</option>
         <option>Cocktail Glass</option><option>Cappuccino Cup &amp; Saucer</option><option>Glass Jar</option>
       </select>
-
       <label class="field-label">Plating Style</label>
       <div class="pill-group" id="style-pills">
         <button class="pill active" data-val="Classic" onclick="selPill(this,'style-pills')">Classic</button>
@@ -262,7 +254,6 @@ body.dark .chk-item:hover{background:rgba(255,255,255,0.06);}
     <div class="glass-card">
       <p class="section-label">◈ Garnish Inclusions</p>
       <p class="hint-text">Select all elements used in the final plating.</p>
-
       <div class="garnish-group">
         <p class="garnish-group-title">Herbs &amp; Greens</p>
         <div class="garnish-grid">
@@ -392,6 +383,9 @@ body.dark .chk-item:hover{background:rgba(255,255,255,0.06);}
         </div>
       </div>
       <div id="result-error" class="err-msg"></div>
+      <div id="sheet-link-wrap" style="text-align:center;margin:12px 0 4px;display:none;">
+        <a id="sheet-link" class="sheet-link" href="#" target="_blank">◈ Open Plating Log Sheet →</a>
+      </div>
       <button class="btn" onclick="printCard()">⊡ Print / Save as PDF</button>
       <button class="btn btn-ghost" style="margin-top:8px;" onclick="showView('view-form')">← Edit Dish</button>
       <button class="btn btn-ghost" style="margin-top:8px;" onclick="resetAndNew()">+ New Card</button>
@@ -403,7 +397,8 @@ body.dark .chk-item:hover{background:rgba(255,255,255,0.06);}
 <div id="print-area"><div class="a6-card" id="print-card-inner"></div></div>
 
 <script>
-const LS_KEY = 'hb_plating_gas_url';
+const LS_KEY      = 'hb_plating_gas_url';
+const LS_SHEET    = 'hb_plating_sheet_url';
 const S = {
   gasUrl:'', mode:'upload',
   photoBase64:null, photoMime:null,
@@ -422,16 +417,15 @@ const S = {
     showConnected(true,'Saved — ready');
     showView('view-form');
   }
+  const sheetUrl = localStorage.getItem(LS_SHEET);
+  if(sheetUrl) showSheetLink(sheetUrl);
 })();
 
-// ── THEME ──
 function toggleTheme(){
   const d=document.body.classList.toggle('dark');
   document.body.classList.toggle('light',!d);
   document.getElementById('theme-btn').textContent=d?'☾':'☀';
 }
-
-// ── VIEWS / PILLS ──
 function showView(id){
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -445,67 +439,58 @@ function getPill(gid){
   const el=document.querySelector('#'+gid+' .pill.active');
   return el?el.dataset.val:'';
 }
-
-// ── IMAGE MODE TOGGLE ──
 function setMode(m){
   S.mode=m;
   document.getElementById('tab-upload').classList.toggle('active',m==='upload');
   document.getElementById('tab-generate').classList.toggle('active',m==='generate');
-  document.getElementById('upload-panel').style.display   = m==='upload'   ? 'block':'none';
-  document.getElementById('generate-panel').style.display = m==='generate' ? 'block':'none';
+  document.getElementById('upload-panel').style.display   = m==='upload'?'block':'none';
+  document.getElementById('generate-panel').style.display = m==='generate'?'block':'none';
 }
 
-// ── PHOTO UPLOAD ──
+// ── PHOTO UPLOAD — square center crop ──
 function handlePhotoSelect(e){
-  const file = e.target.files?.[0];
+  const file=e.target.files?.[0];
   if(!file) return;
-
-  // Resize to max 1024px before sending — keeps payload under GAS limits
-  const reader = new FileReader();
-  reader.onload = function(ev){
-    const img = new Image();
-    img.onload = function(){
-      const MAX = 1024;
-      let w = img.width, h = img.height;
-      if(w > MAX || h > MAX){
-        const ratio = Math.min(MAX/w, MAX/h);
-        w = Math.round(w*ratio);
-        h = Math.round(h*ratio);
-      }
-      const canvas = document.createElement('canvas');
-      canvas.width=w; canvas.height=h;
-      canvas.getContext('2d').drawImage(img,0,0,w,h);
-      const mime = 'image/jpeg';
-      const dataUrl = canvas.toDataURL(mime, 0.88);
-      S.photoBase64 = dataUrl.split(',')[1];
-      S.photoMime   = mime;
-
-      // Show preview
-      const preview = document.getElementById('photo-preview');
-      const zone    = document.getElementById('upload-zone');
-      preview.src = dataUrl;
-      preview.style.display = 'block';
-      document.getElementById('upload-empty').style.display = 'none';
-      document.getElementById('remove-img-btn').style.display = 'flex';
-      zone.classList.add('has-img');
+  const reader=new FileReader();
+  reader.onload=function(ev){
+    const img=new Image();
+    img.onload=function(){
+      // ── FIX 1: center-crop to square, then resize to 1024×1024 ──
+      const size = Math.min(img.naturalWidth, img.naturalHeight);
+      const sx   = Math.floor((img.naturalWidth  - size) / 2);
+      const sy   = Math.floor((img.naturalHeight - size) / 2);
+      const canvas=document.createElement('canvas');
+      canvas.width=1024; canvas.height=1024;
+      canvas.getContext('2d').drawImage(img, sx, sy, size, size, 0, 0, 1024, 1024);
+      const mime='image/jpeg';
+      const dataUrl=canvas.toDataURL(mime, 0.88);
+      S.photoBase64=dataUrl.split(',')[1];
+      S.photoMime=mime;
+      // Show square preview
+      document.getElementById('photo-preview').src=dataUrl;
+      document.getElementById('preview-wrap').style.display='block';
+      document.getElementById('upload-empty').style.display='none';
+      document.getElementById('upload-zone').classList.add('has-img');
+      // Remove file input pointer-events so remove btn works
+      document.getElementById('photo-input').style.pointerEvents='none';
     };
-    img.src = ev.target.result;
+    img.src=ev.target.result;
   };
   reader.readAsDataURL(file);
 }
 
 function removePhoto(e){
-  e.stopPropagation();
-  S.photoBase64 = null; S.photoMime = null;
-  document.getElementById('photo-preview').style.display='none';
+  if(e) e.stopPropagation();
+  S.photoBase64=null; S.photoMime=null;
   document.getElementById('photo-preview').src='';
+  document.getElementById('preview-wrap').style.display='none';
   document.getElementById('upload-empty').style.display='block';
-  document.getElementById('remove-img-btn').style.display='none';
   document.getElementById('upload-zone').classList.remove('has-img');
   document.getElementById('photo-input').value='';
+  document.getElementById('photo-input').style.pointerEvents='auto';
 }
 
-// ── SETUP TEST & SAVE ──
+// ── SETUP ──
 function showConnected(ok,msg){
   const wrap=document.getElementById('conn-status');
   const badge=document.getElementById('conn-badge');
@@ -513,39 +498,33 @@ function showConnected(ok,msg){
   badge.className='conn-badge '+(ok?'ok':'err');
   document.getElementById('conn-text').textContent=msg;
 }
-
 async function testAndSave(){
   const url=document.getElementById('gas-url').value.trim();
   const errEl=document.getElementById('setup-error');
   const btn=document.getElementById('save-btn');
   errEl.classList.remove('on');
-  if(!url||!url.includes('script.google.com')){
-    errEl.textContent='Please paste a valid Apps Script /exec URL.';
-    errEl.classList.add('on'); return;
-  }
-  btn.disabled=true; btn.textContent='Testing connection…';
-  try {
+  if(!url||!url.includes('script.google.com')){errEl.textContent='Paste a valid Apps Script /exec URL.';errEl.classList.add('on');return;}
+  btn.disabled=true; btn.textContent='Testing…';
+  try{
     const res=await gasCall({action:'ping'},url);
     if(!res.ok) throw new Error('Unexpected response.');
     localStorage.setItem(LS_KEY,url);
     S.gasUrl=url;
     showConnected(true,'Connected · '+new Date().toLocaleTimeString());
-    btn.textContent='Test Connection & Save';
-    btn.disabled=false;
+    btn.textContent='Test Connection & Save'; btn.disabled=false;
     setTimeout(()=>showView('view-form'),800);
-  } catch(err){
-    showConnected(false,'Failed — '+err.message);
-    errEl.textContent='Could not reach backend: '+err.message;
+  }catch(err){
+    showConnected(false,'Failed');
+    errEl.textContent='Cannot reach backend: '+err.message;
     errEl.classList.add('on');
-    btn.textContent='Test Connection & Save';
-    btn.disabled=false;
+    btn.textContent='Test Connection & Save'; btn.disabled=false;
   }
 }
 
 // ── GAS CALL ──
 async function gasCall(payload,url=null){
   const endpoint=url||S.gasUrl;
-  if(!endpoint) throw new Error('Backend URL not configured. Tap ⚙ to set up.');
+  if(!endpoint) throw new Error('Backend URL not set. Tap ⚙ to configure.');
   const res=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify(payload)});
   if(!res.ok) throw new Error('HTTP '+res.status);
   const json=await res.json();
@@ -563,12 +542,11 @@ function collectForm(){
   const garnishes=[...document.querySelectorAll('.gc:checked')].map(c=>c.value);
   if(sauce!=='None') garnishes.push(sauce);
   return {
-    dishName:name,
-    category:getPill('cat-pills'),
+    dishName:name, category:getPill('cat-pills'),
     crockery:document.getElementById('crockery').value,
     style:getPill('style-pills'),
     base:document.getElementById('base-spread').value.trim(),
-    sauce,garnishes,
+    sauce, garnishes,
     notes:document.getElementById('special-notes').value.trim(),
     outlet:getPill('outlet-pills')
   };
@@ -590,36 +568,47 @@ async function generateCard(){
     document.getElementById('loading-sub').textContent=sub;
   };
 
-  try {
+  try{
     // IMAGE
     if(S.mode==='upload' && S.photoBase64){
-      setMsg('Enhancing your photo…','OpenAI is improving lighting & quality');
-      const enhancePrompt = buildEnhancePrompt(S);
-      const imgResult = await gasCall({action:'enhance_image', imageBase64:S.photoBase64, mimeType:S.photoMime, prompt:enhancePrompt});
-      S.imgUrl = imgResult.value;
+      setMsg('Enhancing your photo…','OpenAI improving lighting & quality (~20s)');
+      const r=await gasCall({action:'enhance_image',imageBase64:S.photoBase64,mimeType:S.photoMime,prompt:buildEnhancePrompt(S)});
+      S.imgUrl=r.value;
     } else {
-      setMsg('Generating plating image…','This takes 10–20 seconds');
-      const imgResult = await gasCall({action:'generate_image', prompt:buildImgPrompt(S)});
-      S.imgUrl = imgResult.value;
+      setMsg('Generating plating image…','OpenAI creating square food photo (~20s)');
+      const r=await gasCall({action:'generate_image',prompt:buildImgPrompt(S)});
+      S.imgUrl=r.value;
     }
 
     // INSTRUCTIONS
-    setMsg('Writing plating guide…','Claude is drafting the steps');
-    const textResult = await gasCall({action:'generate_instructions', prompt:buildInstructionPrompt(S)});
-    S.platingText = textResult.text;
+    setMsg('Writing plating guide…','Claude drafting steps');
+    const tr=await gasCall({action:'generate_instructions',prompt:buildInstructionPrompt(S)});
+    S.platingText=tr.text;
 
-    setMsg('Composing card…');
-    await new Promise(r=>setTimeout(r,350));
+    // LOG TO SHEET
+    setMsg('Saving to log…','');
+    try{
+      await gasCall({action:'log_entry', entry:{
+        dishName:S.dishName, category:S.category, crockery:S.crockery,
+        style:S.style, base:S.base, sauce:S.sauce, garnishes:S.garnishes,
+        notes:S.notes, outlet:S.outlet,
+        imageMode: S.mode==='upload' && S.photoBase64 ? 'upload+enhance' : 'ai-generate'
+      }});
+    }catch(logErr){
+      // Sheet logging failure is non-fatal — card still shows
+      console.warn('Sheet log failed:', logErr.message);
+    }
 
+    await new Promise(r=>setTimeout(r,300));
     renderCard(S);
     document.getElementById('loading-state').style.display='none';
     document.getElementById('result-state').style.display='block';
 
-  } catch(err){
+  }catch(err){
     document.getElementById('loading-state').style.display='none';
     document.getElementById('result-state').style.display='block';
     const e=document.getElementById('result-error');
-    e.textContent='Error: '+(err.message||'Check Script Properties on the backend.');
+    e.textContent='Error: '+(err.message||'Check Script Properties on backend.');
     e.classList.add('on');
     if(S.platingText) renderCard(S);
   }
@@ -629,20 +618,18 @@ async function generateCard(){
 function buildEnhancePrompt(d){
   const g=d.garnishes.slice(0,4).join(', ');
   const gstr=g?`, garnished with ${g}`:'';
-  return `Enhance this food photo to professional restaurant quality. Keep the dish exactly as shown — same ${d.crockery}, same food, same plating. Improve: lighting to soft natural diffused light, sharpness, colour vibrancy, background cleanliness. Make it look like a high-end food magazine photo of ${d.dishName}${gstr}. ${d.style} plating style. No text, no watermarks.`;
+  return `Enhance this food photo to professional restaurant quality. Keep the dish exactly as shown — same ${d.crockery}, same food, same composition. Improve: lighting to soft natural diffused light, sharpness, colour vibrancy, clean background. Make it look like a high-end food magazine square photo of ${d.dishName}${gstr}. ${d.style} plating style. No text, no watermarks.`;
 }
-
 function buildImgPrompt(d){
   const g=d.garnishes.slice(0,5).join(', ');
   const base=d.base?`with ${d.base} as base, `:'';
   const sauce=d.sauce!=='None'?`drizzled with ${d.sauce}, `:'';
   const gstr=g?`garnished with ${g}. `:'';
-  return `Professional food photography, overhead or 45-degree angle, of ${d.dishName} on a ${d.crockery}. ${d.style} plating style. ${base}${sauce}${gstr}Soft natural diffused lighting, clean background, ultra-realistic, 8K, food magazine quality. No text, no watermarks.`;
+  return `Professional food photography, overhead or 45-degree angle, square 1:1 composition, of ${d.dishName} on a ${d.crockery}. ${d.style} plating style. ${base}${sauce}${gstr}Soft natural diffused lighting, clean background, ultra-realistic, food magazine quality. No text, no watermarks.`;
 }
-
 function buildInstructionPrompt(d){
   const gStr=d.garnishes.length?d.garnishes.join(', '):'None';
-  return `You are a professional chef instructor writing a quick-reference plating card for kitchen staff at a specialty café.
+  return `You are a professional chef instructor writing a plating card for kitchen staff at a specialty café.
 
 DISH: ${d.dishName}
 CATEGORY: ${d.category}
@@ -660,13 +647,21 @@ Write a plating guide in EXACTLY this format — each line under 12 words, numbe
 4. [Place garnish elements]
 5. TIP: [One critical finishing tip]
 
-Skip steps not applicable. Ultra-concise — prints tiny on a kitchen card.`;
+Skip steps not applicable. Ultra-concise.`;
+}
+
+// ── SHEET LINK ──
+function showSheetLink(url){
+  if(!url) return;
+  document.getElementById('sheet-link').href=url;
+  document.getElementById('sheet-link-wrap').style.display='block';
+  localStorage.setItem(LS_SHEET, url);
 }
 
 // ── CARD RENDER ──
 function buildCardHTML(d){
   const imgHTML = d.imgUrl
-    ? `<img class="card-img" src="${esc(d.imgUrl)}" alt="${esc(d.dishName)}" crossorigin="anonymous">`
+    ? `<div class="card-img-wrap"><img class="card-img" src="${esc(d.imgUrl)}" alt="${esc(d.dishName)}" crossorigin="anonymous"></div>`
     : `<div class="card-img-placeholder"><span style="color:#555;font-family:'Space Mono',monospace;font-size:0.45rem;letter-spacing:2px;text-transform:uppercase;">Image unavailable</span></div>`;
   const pills=d.garnishes.slice(0,9).map(g=>`<span class="card-garnish-pill">${esc(g)}</span>`).join('');
   const lines=d.platingText.split('\n').filter(l=>l.trim()).slice(0,5).map(l=>esc(l.trim())).join('<br>');
@@ -689,18 +684,13 @@ function buildCardHTML(d){
   <span class="card-footer-cat">${esc(d.category)}</span>
 </div>`;
 }
-
 function renderCard(d){
   const html=buildCardHTML(d);
   document.getElementById('preview-card').innerHTML=html;
   document.getElementById('print-card-inner').innerHTML=html;
 }
-
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-
-// ── PRINT & RESET ──
-function printCard(){ window.print(); }
-
+function printCard(){window.print();}
 function resetAndNew(){
   document.getElementById('dish-name').value='';
   document.getElementById('base-spread').value='';
@@ -710,7 +700,7 @@ function resetAndNew(){
   ['cat-pills','style-pills','outlet-pills'].forEach(gid=>{
     document.querySelectorAll('#'+gid+' .pill').forEach((p,i)=>p.classList.toggle('active',i===0));
   });
-  removePhoto({stopPropagation:()=>{}});
+  removePhoto(null);
   setMode('upload');
   showView('view-form');
 }
