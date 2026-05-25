@@ -178,9 +178,10 @@ body.dark .chk-item:hover{background:rgba(255,255,255,0.06);}
     <!-- IMAGE -->
     <div class="glass-card">
       <p class="section-label">◈ Dish Image</p>
-      <div class="upload-mode-tabs">
-        <button class="mode-tab active" id="tab-upload" onclick="setMode('upload')">📷 Upload &amp; Enhance</button>
-        <button class="mode-tab" id="tab-generate" onclick="setMode('generate')">✦ AI Generate</button>
+      <div class="upload-mode-tabs" style="grid-template-columns:1fr 1fr 1fr;">
+        <button class="mode-tab active" id="tab-upload" onclick="setMode('upload')">✦ Enhance</button>
+        <button class="mode-tab" id="tab-real" onclick="setMode('real')">📷 Real Photo</button>
+        <button class="mode-tab" id="tab-generate" onclick="setMode('generate')">AI Generate</button>
       </div>
       <div id="upload-panel">
         <p class="hint-text">Upload your real dish photo. Cropped to square &amp; enhanced by OpenAI.</p>
@@ -199,6 +200,22 @@ body.dark .chk-item:hover{background:rgba(255,255,255,0.06);}
       </div>
       <div id="generate-panel" style="display:none;">
         <p class="hint-text">OpenAI generates a square food photo from your dish details and garnish selections.</p>
+      </div>
+
+      <div id="real-panel" style="display:none;">
+        <p class="hint-text">Upload your photo — used exactly as taken, no AI processing. Free &amp; instant.</p>
+        <div class="upload-zone" id="upload-zone-real">
+          <input type="file" id="photo-input-real" accept="image/jpeg,image/png,image/webp" onchange="handlePhotoSelect(event,'real')">
+          <div id="upload-empty-real">
+            <div class="upload-icon">⊕</div>
+            <p class="upload-label">Tap to upload dish photo</p>
+            <p class="upload-hint">Used as-is · No enhancement · Free</p>
+          </div>
+          <div id="preview-wrap-real" class="preview-wrap" style="display:none;">
+            <img id="photo-preview-real" class="preview-img" alt="Dish preview">
+            <button class="remove-img-btn" onclick="removePhoto(event,'real')">✕</button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -315,7 +332,7 @@ const SS_KEY   = 'hb_plating_options_cache'; // sessionStorage key for options c
 
 const S = {
   gasUrl:'', mode:'upload',
-  photoBase64:null, photoMime:null,
+  photoBase64:null, photoMime:null, photoDataUrl:null,
   dishName:'', category:'Food', crockery:'',
   style:'Classic', base:'', sauce:'None',
   garnishes:[], notes:'', outlet:'All Outlets',
@@ -358,8 +375,10 @@ function setMode(m){
   S.mode=m;
   document.getElementById('tab-upload').classList.toggle('active',m==='upload');
   document.getElementById('tab-generate').classList.toggle('active',m==='generate');
+  document.getElementById('tab-real').classList.toggle('active',m==='real');
   document.getElementById('upload-panel').style.display   = m==='upload'?'block':'none';
   document.getElementById('generate-panel').style.display = m==='generate'?'block':'none';
+  document.getElementById('real-panel').style.display     = m==='real'?'block':'none';
 }
 
 // ── LOAD OPTIONS FROM SHEET ──
@@ -450,7 +469,8 @@ function renderOptions(opts){
 }
 
 // ── PHOTO UPLOAD ──
-function handlePhotoSelect(e){
+function handlePhotoSelect(e, zone){
+  zone = zone || 'enhance';
   const file=e.target.files?.[0];
   if(!file) return;
   const reader=new FileReader();
@@ -468,25 +488,33 @@ function handlePhotoSelect(e){
       const dataUrl=canvas.toDataURL(mime,0.88);
       S.photoBase64=dataUrl.split(',')[1];
       S.photoMime=mime;
-      document.getElementById('photo-preview').src=dataUrl;
-      document.getElementById('preview-wrap').style.display='block';
-      document.getElementById('upload-empty').style.display='none';
-      document.getElementById('upload-zone').classList.add('has-img');
-      document.getElementById('photo-input').style.pointerEvents='none';
+      S.photoDataUrl=dataUrl; // store full data URL for real mode
+
+      const suffix = zone==='real' ? '-real' : '';
+      document.getElementById('photo-preview'+suffix).src=dataUrl;
+      document.getElementById('preview-wrap'+suffix).style.display='block';
+      document.getElementById('upload-empty'+suffix).style.display='none';
+      const zoneAdd = zone==='real' ? 'upload-zone-real' : 'upload-zone';
+      document.getElementById(zoneAdd).classList.add('has-img');
+      document.getElementById('photo-input'+suffix).style.pointerEvents='none';
     };
     img.src=ev.target.result;
   };
   reader.readAsDataURL(file);
 }
-function removePhoto(e){
+function removePhoto(e, zone){
   if(e) e.stopPropagation();
-  S.photoBase64=null; S.photoMime=null;
-  document.getElementById('photo-preview').src='';
-  document.getElementById('preview-wrap').style.display='none';
-  document.getElementById('upload-empty').style.display='block';
-  document.getElementById('upload-zone').classList.remove('has-img');
-  document.getElementById('photo-input').value='';
-  document.getElementById('photo-input').style.pointerEvents='auto';
+  zone = zone || 'enhance';
+  S.photoBase64=null; S.photoMime=null; S.photoDataUrl=null;
+  const suffix = zone==='real' ? '-real' : '';
+  const zoneId  = zone==='real' ? 'upload-zone-real' : 'upload-zone';
+  const inputId = zone==='real' ? 'photo-input-real' : 'photo-input';
+  document.getElementById('photo-preview'+suffix).src='';
+  document.getElementById('preview-wrap'+suffix).style.display='none';
+  document.getElementById('upload-empty'+suffix).style.display='block';
+  document.getElementById(zoneId).classList.remove('has-img');
+  document.getElementById(inputId).value='';
+  document.getElementById(inputId).style.pointerEvents='auto';
 }
 
 // ── SETUP ──
@@ -568,7 +596,10 @@ async function generateCard(){
   };
 
   try{
-    if(S.mode==='upload' && S.photoBase64){
+    if(S.mode==='real' && S.photoDataUrl){
+      // Use photo directly — no API call, free & instant
+      S.imgUrl = S.photoDataUrl;
+    } else if(S.mode==='upload' && S.photoBase64){
       setMsg('Enhancing your photo…','OpenAI improving lighting & quality (~20s)');
       const r=await gasCall({action:'enhance_image',imageBase64:S.photoBase64,mimeType:S.photoMime,prompt:buildEnhancePrompt(S)});
       S.imgUrl=r.value;
@@ -588,7 +619,7 @@ async function generateCard(){
         dishName:S.dishName, category:S.category, crockery:S.crockery,
         style:S.style, base:S.base, sauce:S.sauce, garnishes:S.garnishes,
         notes:S.notes, outlet:S.outlet,
-        imageMode: S.mode==='upload'&&S.photoBase64?'upload+enhance':'ai-generate'
+        imageMode: S.mode==='real'?'real-photo': S.mode==='upload'&&S.photoBase64?'upload+enhance':'ai-generate'
       }});
       if(lr.sheetUrl) showSheetLink(lr.sheetUrl);
     }catch(logErr){ console.warn('Sheet log:', logErr.message); }
@@ -657,7 +688,7 @@ function buildCardHTML(d){
   const imgHTML=d.imgUrl
     ?`<div class="card-img-wrap"><img class="card-img" src="${esc(d.imgUrl)}" alt="${esc(d.dishName)}" crossorigin="anonymous"></div>`
     :`<div class="card-img-placeholder"><span style="color:#555;font-family:'Space Mono',monospace;font-size:0.45rem;letter-spacing:2px;text-transform:uppercase;">Image unavailable</span></div>`;
-  const pills=d.garnishes.slice(0,9).map(g=>`<span class="card-garnish-pill">${esc(g)}</span>`).join('');
+  const pills=d.garnishes.map(g=>`<span class="card-garnish-pill">${esc(g)}</span>`).join('');
   const lines=d.platingText.split('\n').filter(l=>l.trim()).slice(0,5).map(l=>esc(l.trim())).join('<br>');
   const baseMeta=d.base?`<div><span class="card-meta-label">Base</span><span class="card-meta-value">${esc(d.base)}</span></div>`:'';
   return `${imgHTML}
@@ -695,7 +726,8 @@ function resetAndNew(){
   ['cat-pills','style-pills','outlet-pills'].forEach(gid=>{
     document.querySelectorAll('#'+gid+' .pill').forEach((p,i)=>p.classList.toggle('active',i===0));
   });
-  removePhoto(null);
+  removePhoto(null,'enhance');
+  removePhoto(null,'real');
   setMode('upload');
   showView('view-form');
 }
