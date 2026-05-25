@@ -41,11 +41,24 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 .btn:disabled{opacity:0.4;cursor:not-allowed;transform:none;}
 .btn-ghost{background:transparent;border:1px solid var(--border2);color:var(--text3);box-shadow:none;}
 .btn-ghost:hover{background:var(--surface);opacity:1;}
-.btn-sm{padding:10px 18px;font-size:0.72rem;}
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
 .pill-group{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
 .pill{padding:8px 16px;border-radius:60px;font-family:'Nunito Sans',sans-serif;font-size:0.75rem;font-weight:600;letter-spacing:0.5px;border:1px solid var(--border2);background:transparent;color:var(--text3);cursor:pointer;transition:all 0.2s;}
 .pill.active{background:var(--btn-bg);color:var(--btn-fg);border-color:transparent;}
+/* ── IMAGE UPLOAD ZONE ── */
+.upload-mode-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px;}
+.mode-tab{padding:12px 8px;border-radius:14px;border:1px solid var(--border2);background:transparent;color:var(--text3);font-family:'Nunito Sans',sans-serif;font-size:0.75rem;font-weight:600;letter-spacing:0.5px;cursor:pointer;transition:all 0.2s;text-align:center;}
+.mode-tab.active{background:var(--btn-bg);color:var(--btn-fg);border-color:transparent;}
+.upload-zone{border:1.5px dashed var(--border2);border-radius:16px;padding:28px 20px;text-align:center;cursor:pointer;transition:border-color 0.2s,background 0.2s;margin-bottom:8px;position:relative;}
+.upload-zone:hover{border-color:var(--gold);background:rgba(184,134,11,0.04);}
+.upload-zone.has-img{border-style:solid;border-color:var(--gold);padding:0;overflow:hidden;}
+.upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.upload-icon{font-size:1.8rem;margin-bottom:8px;line-height:1;}
+.upload-label{font-family:'Space Mono',monospace;font-size:0.52rem;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin-bottom:4px;}
+.upload-hint{font-size:0.68rem;font-weight:300;color:var(--text3);}
+.preview-img{width:100%;height:200px;object-fit:cover;display:block;}
+.remove-img-btn{position:absolute;top:8px;right:8px;width:28px;height:28px;border-radius:50%;background:rgba(0,0,0,0.6);color:#fff;border:none;cursor:pointer;font-size:0.8rem;display:flex;align-items:center;justify-content:center;z-index:2;}
+/* ── GARNISH ── */
 .garnish-group{margin-bottom:18px;}
 .garnish-group-title{font-family:'Space Mono',monospace;font-size:0.48rem;letter-spacing:2px;color:var(--text3);text-transform:uppercase;margin-bottom:8px;}
 .garnish-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:4px;}
@@ -54,11 +67,13 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 body.dark .chk-item:hover{background:rgba(255,255,255,0.06);}
 .chk-item input[type=checkbox]{width:16px;height:16px;accent-color:var(--text);flex-shrink:0;cursor:pointer;margin:0;}
 .chk-item span{font-size:0.75rem;font-weight:300;color:var(--text2);line-height:1.3;}
+/* ── LOADING ── */
 .loading-wrap{text-align:center;padding:40px 0;}
 .spinner{width:38px;height:38px;border:2px solid var(--border2);border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 24px;}
 @keyframes spin{to{transform:rotate(360deg);}}
 .loading-step{font-family:'Space Mono',monospace;font-size:0.52rem;letter-spacing:3px;color:var(--text3);text-transform:uppercase;}
 .loading-sub{font-size:0.65rem;font-weight:300;color:var(--text3);margin-top:8px;}
+/* ── A6 CARD ── */
 .card-preview-wrap{display:flex;justify-content:center;padding:16px 0 8px;}
 .a6-card{width:310px;min-height:437px;border-radius:10px;overflow:hidden;box-shadow:0 12px 48px rgba(0,0,0,0.2),0 2px 6px rgba(0,0,0,0.1);background:#ffffff;flex-shrink:0;font-family:'Nunito Sans',sans-serif;display:flex;flex-direction:column;}
 .card-img{width:100%;height:210px;object-fit:cover;display:block;flex-shrink:0;}
@@ -76,24 +91,17 @@ body.dark .chk-item:hover{background:rgba(255,255,255,0.06);}
 .card-footer{display:flex;justify-content:space-between;align-items:center;padding:7px 15px;background:#1d1d1f;flex-shrink:0;}
 .card-footer-brand{font-weight:200;font-size:0.58rem;letter-spacing:4px;text-transform:uppercase;color:#f5f5f7;}
 .card-footer-cat{font-family:'Space Mono',monospace;font-size:0.38rem;letter-spacing:2px;text-transform:uppercase;color:#86868b;}
-/* connected indicator */
+/* ── MISC ── */
 .conn-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:40px;font-family:'Space Mono',monospace;font-size:0.48rem;letter-spacing:2px;text-transform:uppercase;}
 .conn-badge.ok{background:rgba(34,197,94,0.12);color:#16a34a;border:1px solid rgba(34,197,94,0.25);}
 .conn-badge.err{background:rgba(220,38,38,0.08);color:#dc2626;border:1px solid rgba(220,38,38,0.2);}
 .conn-dot{width:6px;height:6px;border-radius:50%;background:currentColor;}
-/* theme button */
 .theme-btn{position:fixed;top:18px;right:18px;z-index:100;width:38px;height:38px;border-radius:50%;background:var(--surface);border:1px solid var(--border2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.95rem;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:all 0.2s;}
-.theme-btn:hover{box-shadow:var(--shadow);}
-/* settings cog */
 .settings-btn{position:fixed;top:18px;right:66px;z-index:100;width:38px;height:38px;border-radius:50%;background:var(--surface);border:1px solid var(--border2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.9rem;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:all 0.2s;}
-.settings-btn:hover{box-shadow:var(--shadow);}
-/* error */
 .err-msg{background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.2);border-radius:12px;padding:12px 16px;font-size:0.75rem;color:#dc2626;margin-top:12px;display:none;line-height:1.5;}
 .err-msg.on{display:block;}
 .hint-text{font-size:0.72rem;font-weight:300;color:var(--text3);margin-bottom:16px;line-height:1.6;}
-/* GAS url display */
-.url-display{font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--text3);word-break:break-all;padding:10px 14px;background:var(--input-bg);border:1px solid var(--input-bdr);border-radius:10px;margin-bottom:8px;}
-/* ─── PRINT ─── */
+/* ── PRINT ── */
 @media print{
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
   body>*{display:none!important;}
@@ -125,60 +133,76 @@ body.dark .chk-item:hover{background:rgba(255,255,255,0.06);}
 </div>
 
 <button class="theme-btn" onclick="toggleTheme()" id="theme-btn" aria-label="Toggle theme">☀</button>
-<button class="settings-btn" onclick="showView('view-setup')" id="settings-btn" title="Backend settings">⚙</button>
+<button class="settings-btn" onclick="showView('view-setup')" title="Backend settings">⚙</button>
 
 <div class="app">
-
   <header class="hdr">
     <p class="eyebrow">Heebee Coffee</p>
     <h1 class="brand">Plating Guide</h1>
     <div class="gold-rule"></div>
   </header>
 
-  <!-- ══════════════════════════════════════════
-       VIEW 1 — BACKEND SETUP (one-time)
-  ══════════════════════════════════════════ -->
+  <!-- ══ VIEW 1 — SETUP ══ -->
   <div id="view-setup" class="view active">
     <div class="glass-card">
       <p class="section-label">◈ Backend Setup</p>
-      <p class="hint-text">Paste your Google Apps Script web app URL below. This is the only thing stored in your browser. All API keys stay on the server.</p>
-
+      <p class="hint-text">Paste your Google Apps Script web app URL. All API keys stay on the server — never in the browser.</p>
       <label class="field-label">Apps Script Web App URL</label>
       <input type="text" id="gas-url" placeholder="https://script.google.com/macros/s/…/exec" autocomplete="off" spellcheck="false">
-
       <div id="conn-status" style="margin-bottom:16px;display:none;">
         <span id="conn-badge" class="conn-badge ok">
           <span class="conn-dot"></span>
           <span id="conn-text">Connected</span>
         </span>
       </div>
-
       <div id="setup-error" class="err-msg"></div>
       <button class="btn" onclick="testAndSave()" id="save-btn">Test Connection &amp; Save</button>
     </div>
-
     <div class="glass-card">
       <p class="section-label">◈ How to Deploy</p>
-      <p class="hint-text" style="margin-bottom:8px;">
-        <strong style="font-weight:600;color:var(--text);">1.</strong> Open <span style="font-family:'Space Mono',monospace;font-size:0.68rem;">script.google.com</span> → New Project<br>
-        <strong style="font-weight:600;color:var(--text);">2.</strong> Paste the contents of <span style="font-family:'Space Mono',monospace;font-size:0.68rem;">heebee-plating-backend.gs</span><br>
-        <strong style="font-weight:600;color:var(--text);">3.</strong> ⚙ Project Settings → Script Properties → Add:<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;<span style="font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--text2);">OPENAI_KEY · ANTHROPIC_KEY · IMAGE_MODEL · IMAGE_QUALITY</span><br>
-        <strong style="font-weight:600;color:var(--text);">4.</strong> Deploy → New deployment → Web App<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;Execute as: <em>Me</em> · Who has access: <em>Anyone</em><br>
-        <strong style="font-weight:600;color:var(--text);">5.</strong> Copy the /exec URL → paste above
+      <p class="hint-text">
+        <strong style="font-weight:600;color:var(--text);">1.</strong> script.google.com → New Project → paste <code style="font-size:0.68rem;">heebee-plating-backend.gs</code><br>
+        <strong style="font-weight:600;color:var(--text);">2.</strong> ⚙ Script Properties → Add: <code style="font-size:0.65rem;">OPENAI_KEY · ANTHROPIC_KEY · IMAGE_MODEL · IMAGE_QUALITY</code><br>
+        <strong style="font-weight:600;color:var(--text);">3.</strong> Deploy → Web App → Execute as: Me · Anyone → Copy /exec URL<br>
+        <strong style="font-weight:600;color:var(--text);">4.</strong> Paste above → Test Connection
       </p>
     </div>
-
-    <p style="text-align:center;font-family:'Space Mono',monospace;font-size:0.48rem;letter-spacing:2px;color:var(--text3);text-transform:uppercase;margin-top:16px;">Internal kitchen tool · Heebee Coffee Pvt. Ltd.</p>
   </div>
 
-  <!-- ══════════════════════════════════════════
-       VIEW 2 — DISH FORM
-  ══════════════════════════════════════════ -->
+  <!-- ══ VIEW 2 — FORM ══ -->
   <div id="view-form" class="view">
 
-    <!-- Basics -->
+    <!-- IMAGE MODE -->
+    <div class="glass-card">
+      <p class="section-label">◈ Dish Image</p>
+
+      <div class="upload-mode-tabs">
+        <button class="mode-tab active" id="tab-upload" onclick="setMode('upload')">📷 Upload &amp; Enhance</button>
+        <button class="mode-tab" id="tab-generate" onclick="setMode('generate')">✦ AI Generate</button>
+      </div>
+
+      <!-- Upload zone -->
+      <div id="upload-panel">
+        <p class="hint-text">Take a photo of the plated dish → OpenAI enhances it to professional food photography quality.</p>
+        <div class="upload-zone" id="upload-zone">
+          <input type="file" id="photo-input" accept="image/jpeg,image/png,image/webp" onchange="handlePhotoSelect(event)">
+          <div id="upload-empty">
+            <div class="upload-icon">⊕</div>
+            <p class="upload-label">Tap to upload dish photo</p>
+            <p class="upload-hint">JPG · PNG · WEBP · max 10MB</p>
+          </div>
+          <img id="photo-preview" class="preview-img" style="display:none;" alt="Dish preview">
+          <button class="remove-img-btn" id="remove-img-btn" style="display:none;" onclick="removePhoto(event)">✕</button>
+        </div>
+      </div>
+
+      <!-- Generate panel -->
+      <div id="generate-panel" style="display:none;">
+        <p class="hint-text">No photo? OpenAI generates a realistic image from your dish details and garnish selections below.</p>
+      </div>
+    </div>
+
+    <!-- DISH DETAILS -->
     <div class="glass-card">
       <p class="section-label">◈ Dish Details</p>
       <label class="field-label">Dish / Item Name</label>
@@ -195,20 +219,11 @@ body.dark .chk-item:hover{background:rgba(255,255,255,0.06);}
 
       <label class="field-label">Crockery / Vessel</label>
       <select id="crockery">
-        <option>Round White Plate</option>
-        <option>Oval Plate</option>
-        <option>Deep Pasta Bowl</option>
-        <option>Shallow Bowl</option>
-        <option>Wooden Board</option>
-        <option>Slate Board</option>
-        <option>Long Rectangular Plate</option>
-        <option>Black Matte Plate</option>
-        <option>Ceramic Ramekin</option>
-        <option>Iron Skillet</option>
-        <option>Bamboo Basket</option>
-        <option>Cocktail Glass</option>
-        <option>Cappuccino Cup &amp; Saucer</option>
-        <option>Glass Jar</option>
+        <option>Round White Plate</option><option>Oval Plate</option><option>Deep Pasta Bowl</option>
+        <option>Shallow Bowl</option><option>Wooden Board</option><option>Slate Board</option>
+        <option>Long Rectangular Plate</option><option>Black Matte Plate</option>
+        <option>Ceramic Ramekin</option><option>Iron Skillet</option><option>Bamboo Basket</option>
+        <option>Cocktail Glass</option><option>Cappuccino Cup &amp; Saucer</option><option>Glass Jar</option>
       </select>
 
       <label class="field-label">Plating Style</label>
@@ -222,36 +237,28 @@ body.dark .chk-item:hover{background:rgba(255,255,255,0.06);}
       </div>
     </div>
 
-    <!-- Base & Sauce -->
+    <!-- BASE & SAUCE -->
     <div class="glass-card">
       <p class="section-label">◈ Base &amp; Sauce</p>
       <div class="two-col">
         <div>
-          <label class="field-label">Base / Spread (optional)</label>
-          <input type="text" id="base-spread" placeholder="e.g. Hummus, Aioli…">
+          <label class="field-label">Base / Spread</label>
+          <input type="text" id="base-spread" placeholder="e.g. Hummus…">
         </div>
         <div>
           <label class="field-label">Sauce / Drizzle</label>
           <select id="sauce">
             <option value="None">None</option>
-            <option>Balsamic Reduction</option>
-            <option>Herb Oil</option>
-            <option>Sriracha Swirl</option>
-            <option>Truffle Oil</option>
-            <option>Tahini Drizzle</option>
-            <option>Pesto</option>
-            <option>Aioli</option>
-            <option>Mango Coulis</option>
-            <option>Chocolate Sauce</option>
-            <option>Caramel</option>
-            <option>Honey Drizzle</option>
-            <option>Chimichurri</option>
+            <option>Balsamic Reduction</option><option>Herb Oil</option><option>Sriracha Swirl</option>
+            <option>Truffle Oil</option><option>Tahini Drizzle</option><option>Pesto</option>
+            <option>Aioli</option><option>Mango Coulis</option><option>Chocolate Sauce</option>
+            <option>Caramel</option><option>Honey Drizzle</option><option>Chimichurri</option>
           </select>
         </div>
       </div>
     </div>
 
-    <!-- Garnish -->
+    <!-- GARNISH -->
     <div class="glass-card">
       <p class="section-label">◈ Garnish Inclusions</p>
       <p class="hint-text">Select all elements used in the final plating.</p>
@@ -271,7 +278,6 @@ body.dark .chk-item:hover{background:rgba(255,255,255,0.06);}
           <label class="chk-item"><input type="checkbox" value="Parsley" class="gc"><span>Parsley</span></label>
         </div>
       </div>
-
       <div class="garnish-group">
         <p class="garnish-group-title">Dust &amp; Powder</p>
         <div class="garnish-grid">
@@ -285,7 +291,6 @@ body.dark .chk-item:hover{background:rgba(255,255,255,0.06);}
           <label class="chk-item"><input type="checkbox" value="Matcha Dust" class="gc"><span>Matcha Dust</span></label>
         </div>
       </div>
-
       <div class="garnish-group">
         <p class="garnish-group-title">Citrus</p>
         <div class="garnish-grid">
@@ -296,7 +301,6 @@ body.dark .chk-item:hover{background:rgba(255,255,255,0.06);}
           <label class="chk-item"><input type="checkbox" value="Lime Zest" class="gc"><span>Lime Zest</span></label>
         </div>
       </div>
-
       <div class="garnish-group">
         <p class="garnish-group-title">Pickled &amp; Brined</p>
         <div class="garnish-grid">
@@ -308,7 +312,6 @@ body.dark .chk-item:hover{background:rgba(255,255,255,0.06);}
           <label class="chk-item"><input type="checkbox" value="Sun-dried Tomato" class="gc"><span>Sun-dried Tomato</span></label>
         </div>
       </div>
-
       <div class="garnish-group">
         <p class="garnish-group-title">Seeds &amp; Crunch</p>
         <div class="garnish-grid">
@@ -320,7 +323,6 @@ body.dark .chk-item:hover{background:rgba(255,255,255,0.06);}
           <label class="chk-item"><input type="checkbox" value="Candied Walnuts" class="gc"><span>Candied Walnuts</span></label>
         </div>
       </div>
-
       <div class="garnish-group">
         <p class="garnish-group-title">Fresh Produce</p>
         <div class="garnish-grid">
@@ -332,7 +334,6 @@ body.dark .chk-item:hover{background:rgba(255,255,255,0.06);}
           <label class="chk-item"><input type="checkbox" value="Pomegranate Seeds" class="gc"><span>Pomegranate</span></label>
         </div>
       </div>
-
       <div class="garnish-group">
         <p class="garnish-group-title">Edible Flowers</p>
         <div class="garnish-grid">
@@ -342,7 +343,6 @@ body.dark .chk-item:hover{background:rgba(255,255,255,0.06);}
           <label class="chk-item"><input type="checkbox" value="Rose Petals" class="gc"><span>Rose Petals</span></label>
         </div>
       </div>
-
       <div class="garnish-group">
         <p class="garnish-group-title">Finishing Touches</p>
         <div class="garnish-grid">
@@ -356,12 +356,11 @@ body.dark .chk-item:hover{background:rgba(255,255,255,0.06);}
       </div>
     </div>
 
-    <!-- Notes & Outlet -->
+    <!-- NOTES & OUTLET -->
     <div class="glass-card">
       <p class="section-label">◈ Notes &amp; Outlet</p>
       <label class="field-label">Special plating notes (optional)</label>
-      <textarea id="special-notes" rows="3" placeholder="e.g. Sauce on the side, serve within 90 seconds, fold napkin under plate edge…" style="resize:none;"></textarea>
-
+      <textarea id="special-notes" rows="3" placeholder="e.g. Sauce on the side, serve within 90 seconds…" style="resize:none;"></textarea>
       <label class="field-label">Outlet</label>
       <div class="pill-group" id="outlet-pills">
         <button class="pill active" data-val="All Outlets" onclick="selPill(this,'outlet-pills')">All Outlets</button>
@@ -375,59 +374,47 @@ body.dark .chk-item:hover{background:rgba(255,255,255,0.06);}
     <button class="btn" onclick="generateCard()">✦ Generate Plating Card</button>
   </div>
 
-  <!-- ══════════════════════════════════════════
-       VIEW 3 — RESULT
-  ══════════════════════════════════════════ -->
+  <!-- ══ VIEW 3 — RESULT ══ -->
   <div id="view-result" class="view">
-
     <div id="loading-state" class="glass-card" style="display:none;">
       <div class="loading-wrap">
         <div class="spinner"></div>
-        <p class="loading-step" id="loading-msg">Starting up...</p>
+        <p class="loading-step" id="loading-msg">Starting…</p>
         <p class="loading-sub" id="loading-sub"></p>
       </div>
     </div>
-
     <div id="result-state" style="display:none;">
       <div class="glass-card">
         <p class="section-label">◈ Plating Card Preview</p>
-        <p class="hint-text">A6 size · 105 × 148mm · Print on glossy card stock</p>
+        <p class="hint-text">A6 · 105 × 148mm · Print on glossy card stock</p>
         <div class="card-preview-wrap">
           <div class="a6-card" id="preview-card"></div>
         </div>
       </div>
       <div id="result-error" class="err-msg"></div>
-      <button class="btn" onclick="printCard()">⊡ Print &nbsp;/&nbsp; Save as PDF</button>
+      <button class="btn" onclick="printCard()">⊡ Print / Save as PDF</button>
       <button class="btn btn-ghost" style="margin-top:8px;" onclick="showView('view-form')">← Edit Dish</button>
       <button class="btn btn-ghost" style="margin-top:8px;" onclick="resetAndNew()">+ New Card</button>
     </div>
-
   </div>
 
-</div><!-- /.app -->
-
-<!-- Print-only clone -->
-<div id="print-area">
-  <div class="a6-card" id="print-card-inner"></div>
 </div>
 
+<div id="print-area"><div class="a6-card" id="print-card-inner"></div></div>
+
 <script>
-// ─────────────────────────────────────────────
-// CONSTANTS & STATE
-// ─────────────────────────────────────────────
 const LS_KEY = 'hb_plating_gas_url';
 const S = {
-  gasUrl:'',
+  gasUrl:'', mode:'upload',
+  photoBase64:null, photoMime:null,
   dishName:'', category:'Food', crockery:'Round White Plate',
   style:'Classic', base:'', sauce:'None',
   garnishes:[], notes:'', outlet:'All Outlets',
   imgUrl:'', platingText:''
 };
 
-// ─────────────────────────────────────────────
-// INIT
-// ─────────────────────────────────────────────
-(function init(){
+// ── INIT ──
+(function(){
   const saved = localStorage.getItem(LS_KEY);
   if(saved && saved.includes('script.google.com')){
     S.gasUrl = saved;
@@ -437,18 +424,14 @@ const S = {
   }
 })();
 
-// ─────────────────────────────────────────────
-// THEME
-// ─────────────────────────────────────────────
+// ── THEME ──
 function toggleTheme(){
   const d=document.body.classList.toggle('dark');
   document.body.classList.toggle('light',!d);
   document.getElementById('theme-btn').textContent=d?'☾':'☀';
 }
 
-// ─────────────────────────────────────────────
-// VIEWS & PILLS
-// ─────────────────────────────────────────────
+// ── VIEWS / PILLS ──
 function showView(id){
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -463,71 +446,114 @@ function getPill(gid){
   return el?el.dataset.val:'';
 }
 
-// ─────────────────────────────────────────────
-// SETUP — TEST & SAVE
-// ─────────────────────────────────────────────
-function showConnected(ok, msg){
+// ── IMAGE MODE TOGGLE ──
+function setMode(m){
+  S.mode=m;
+  document.getElementById('tab-upload').classList.toggle('active',m==='upload');
+  document.getElementById('tab-generate').classList.toggle('active',m==='generate');
+  document.getElementById('upload-panel').style.display   = m==='upload'   ? 'block':'none';
+  document.getElementById('generate-panel').style.display = m==='generate' ? 'block':'none';
+}
+
+// ── PHOTO UPLOAD ──
+function handlePhotoSelect(e){
+  const file = e.target.files?.[0];
+  if(!file) return;
+
+  // Resize to max 1024px before sending — keeps payload under GAS limits
+  const reader = new FileReader();
+  reader.onload = function(ev){
+    const img = new Image();
+    img.onload = function(){
+      const MAX = 1024;
+      let w = img.width, h = img.height;
+      if(w > MAX || h > MAX){
+        const ratio = Math.min(MAX/w, MAX/h);
+        w = Math.round(w*ratio);
+        h = Math.round(h*ratio);
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width=w; canvas.height=h;
+      canvas.getContext('2d').drawImage(img,0,0,w,h);
+      const mime = 'image/jpeg';
+      const dataUrl = canvas.toDataURL(mime, 0.88);
+      S.photoBase64 = dataUrl.split(',')[1];
+      S.photoMime   = mime;
+
+      // Show preview
+      const preview = document.getElementById('photo-preview');
+      const zone    = document.getElementById('upload-zone');
+      preview.src = dataUrl;
+      preview.style.display = 'block';
+      document.getElementById('upload-empty').style.display = 'none';
+      document.getElementById('remove-img-btn').style.display = 'flex';
+      zone.classList.add('has-img');
+    };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function removePhoto(e){
+  e.stopPropagation();
+  S.photoBase64 = null; S.photoMime = null;
+  document.getElementById('photo-preview').style.display='none';
+  document.getElementById('photo-preview').src='';
+  document.getElementById('upload-empty').style.display='block';
+  document.getElementById('remove-img-btn').style.display='none';
+  document.getElementById('upload-zone').classList.remove('has-img');
+  document.getElementById('photo-input').value='';
+}
+
+// ── SETUP TEST & SAVE ──
+function showConnected(ok,msg){
   const wrap=document.getElementById('conn-status');
   const badge=document.getElementById('conn-badge');
-  const text=document.getElementById('conn-text');
   wrap.style.display='block';
   badge.className='conn-badge '+(ok?'ok':'err');
-  text.textContent=msg;
+  document.getElementById('conn-text').textContent=msg;
 }
 
 async function testAndSave(){
   const url=document.getElementById('gas-url').value.trim();
   const errEl=document.getElementById('setup-error');
   const btn=document.getElementById('save-btn');
-
   errEl.classList.remove('on');
   if(!url||!url.includes('script.google.com')){
     errEl.textContent='Please paste a valid Apps Script /exec URL.';
     errEl.classList.add('on'); return;
   }
-
   btn.disabled=true; btn.textContent='Testing connection…';
-
   try {
-    const res=await gasCall({action:'ping'}, url);
-    if(!res.ok) throw new Error('Ping returned unexpected response.');
-    localStorage.setItem(LS_KEY, url);
+    const res=await gasCall({action:'ping'},url);
+    if(!res.ok) throw new Error('Unexpected response.');
+    localStorage.setItem(LS_KEY,url);
     S.gasUrl=url;
     showConnected(true,'Connected · '+new Date().toLocaleTimeString());
     btn.textContent='Test Connection & Save';
     btn.disabled=false;
-    setTimeout(()=>showView('view-form'), 800);
+    setTimeout(()=>showView('view-form'),800);
   } catch(err){
     showConnected(false,'Failed — '+err.message);
-    errEl.textContent='Could not reach the backend: '+err.message;
+    errEl.textContent='Could not reach backend: '+err.message;
     errEl.classList.add('on');
     btn.textContent='Test Connection & Save';
     btn.disabled=false;
   }
 }
 
-// ─────────────────────────────────────────────
-// GAS FETCH HELPER
-// text/plain avoids CORS preflight on GAS
-// ─────────────────────────────────────────────
-async function gasCall(payload, url=null){
-  const endpoint = url || S.gasUrl;
-  if(!endpoint) throw new Error('Backend URL not configured. Click ⚙ to set it up.');
-
-  const res=await fetch(endpoint,{
-    method:'POST',
-    headers:{'Content-Type':'text/plain'},
-    body:JSON.stringify(payload)
-  });
+// ── GAS CALL ──
+async function gasCall(payload,url=null){
+  const endpoint=url||S.gasUrl;
+  if(!endpoint) throw new Error('Backend URL not configured. Tap ⚙ to set up.');
+  const res=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify(payload)});
   if(!res.ok) throw new Error('HTTP '+res.status);
   const json=await res.json();
   if(!json.success) throw new Error(json.error||'Backend error');
   return json.data;
 }
 
-// ─────────────────────────────────────────────
-// FORM COLLECT
-// ─────────────────────────────────────────────
+// ── FORM COLLECT ──
 function collectForm(){
   const name=document.getElementById('dish-name').value.trim();
   const errEl=document.getElementById('form-error');
@@ -542,16 +568,13 @@ function collectForm(){
     crockery:document.getElementById('crockery').value,
     style:getPill('style-pills'),
     base:document.getElementById('base-spread').value.trim(),
-    sauce:sauce,
-    garnishes:garnishes,
+    sauce,garnishes,
     notes:document.getElementById('special-notes').value.trim(),
     outlet:getPill('outlet-pills')
   };
 }
 
-// ─────────────────────────────────────────────
-// MAIN GENERATE FLOW
-// ─────────────────────────────────────────────
+// ── MAIN GENERATE ──
 async function generateCard(){
   const fd=collectForm();
   if(!fd) return;
@@ -568,10 +591,19 @@ async function generateCard(){
   };
 
   try {
-    setMsg('Generating plating image…','This takes 10–20 seconds via the backend');
-    const imgResult = await gasCall({action:'generate_image', prompt:buildImgPrompt(S)});
-    S.imgUrl = imgResult.value; // url or base64 data URI
+    // IMAGE
+    if(S.mode==='upload' && S.photoBase64){
+      setMsg('Enhancing your photo…','OpenAI is improving lighting & quality');
+      const enhancePrompt = buildEnhancePrompt(S);
+      const imgResult = await gasCall({action:'enhance_image', imageBase64:S.photoBase64, mimeType:S.photoMime, prompt:enhancePrompt});
+      S.imgUrl = imgResult.value;
+    } else {
+      setMsg('Generating plating image…','This takes 10–20 seconds');
+      const imgResult = await gasCall({action:'generate_image', prompt:buildImgPrompt(S)});
+      S.imgUrl = imgResult.value;
+    }
 
+    // INSTRUCTIONS
     setMsg('Writing plating guide…','Claude is drafting the steps');
     const textResult = await gasCall({action:'generate_instructions', prompt:buildInstructionPrompt(S)});
     S.platingText = textResult.text;
@@ -587,21 +619,25 @@ async function generateCard(){
     document.getElementById('loading-state').style.display='none';
     document.getElementById('result-state').style.display='block';
     const e=document.getElementById('result-error');
-    e.textContent='Error: '+(err.message||'Something went wrong. Check Script Properties on the backend.');
+    e.textContent='Error: '+(err.message||'Check Script Properties on the backend.');
     e.classList.add('on');
     if(S.platingText) renderCard(S);
   }
 }
 
-// ─────────────────────────────────────────────
-// PROMPTS
-// ─────────────────────────────────────────────
+// ── PROMPTS ──
+function buildEnhancePrompt(d){
+  const g=d.garnishes.slice(0,4).join(', ');
+  const gstr=g?`, garnished with ${g}`:'';
+  return `Enhance this food photo to professional restaurant quality. Keep the dish exactly as shown — same ${d.crockery}, same food, same plating. Improve: lighting to soft natural diffused light, sharpness, colour vibrancy, background cleanliness. Make it look like a high-end food magazine photo of ${d.dishName}${gstr}. ${d.style} plating style. No text, no watermarks.`;
+}
+
 function buildImgPrompt(d){
   const g=d.garnishes.slice(0,5).join(', ');
   const base=d.base?`with ${d.base} as base, `:'';
   const sauce=d.sauce!=='None'?`drizzled with ${d.sauce}, `:'';
   const gstr=g?`garnished with ${g}. `:'';
-  return `Professional food photography, overhead or 45-degree angle view, of ${d.dishName} plated on a ${d.crockery}. ${d.style} restaurant plating style. ${base}${sauce}${gstr}Soft natural diffused lighting, clean background, ultra-realistic, 8K, food magazine quality. Square composition, no text, no watermarks.`;
+  return `Professional food photography, overhead or 45-degree angle, of ${d.dishName} on a ${d.crockery}. ${d.style} plating style. ${base}${sauce}${gstr}Soft natural diffused lighting, clean background, ultra-realistic, 8K, food magazine quality. No text, no watermarks.`;
 }
 
 function buildInstructionPrompt(d){
@@ -624,21 +660,17 @@ Write a plating guide in EXACTLY this format — each line under 12 words, numbe
 4. [Place garnish elements]
 5. TIP: [One critical finishing tip]
 
-Skip steps that are not applicable. Be ultra-concise — this prints tiny on a kitchen card.`;
+Skip steps not applicable. Ultra-concise — prints tiny on a kitchen card.`;
 }
 
-// ─────────────────────────────────────────────
-// CARD RENDERER
-// ─────────────────────────────────────────────
+// ── CARD RENDER ──
 function buildCardHTML(d){
   const imgHTML = d.imgUrl
     ? `<img class="card-img" src="${esc(d.imgUrl)}" alt="${esc(d.dishName)}" crossorigin="anonymous">`
     : `<div class="card-img-placeholder"><span style="color:#555;font-family:'Space Mono',monospace;font-size:0.45rem;letter-spacing:2px;text-transform:uppercase;">Image unavailable</span></div>`;
-
   const pills=d.garnishes.slice(0,9).map(g=>`<span class="card-garnish-pill">${esc(g)}</span>`).join('');
   const lines=d.platingText.split('\n').filter(l=>l.trim()).slice(0,5).map(l=>esc(l.trim())).join('<br>');
   const baseMeta=d.base?`<div><span class="card-meta-label">Base</span><span class="card-meta-value">${esc(d.base)}</span></div>`:'';
-
   return `${imgHTML}
 <div class="card-body">
   <p class="card-outlet-badge">${esc(d.outlet)} · Heebee Coffee</p>
@@ -664,13 +696,9 @@ function renderCard(d){
   document.getElementById('print-card-inner').innerHTML=html;
 }
 
-function esc(s){
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
-// ─────────────────────────────────────────────
-// PRINT & RESET
-// ─────────────────────────────────────────────
+// ── PRINT & RESET ──
 function printCard(){ window.print(); }
 
 function resetAndNew(){
@@ -682,6 +710,8 @@ function resetAndNew(){
   ['cat-pills','style-pills','outlet-pills'].forEach(gid=>{
     document.querySelectorAll('#'+gid+' .pill').forEach((p,i)=>p.classList.toggle('active',i===0));
   });
+  removePhoto({stopPropagation:()=>{}});
+  setMode('upload');
   showView('view-form');
 }
 </script>
