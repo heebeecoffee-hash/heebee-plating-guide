@@ -363,56 +363,88 @@ function setMode(m){
 }
 
 // ── LOAD OPTIONS FROM SHEET ──
-async function loadOptions(forceRefresh=false){
+async function loadOptions(forceRefresh){
   if(!S.gasUrl) return;
 
-  // Use session cache unless force refresh
+  // Validate + use session cache unless force refresh
   if(!forceRefresh){
-    const cached = sessionStorage.getItem(SS_KEY);
+    var cached = sessionStorage.getItem(SS_KEY);
     if(cached){
-      try{ renderOptions(JSON.parse(cached)); return; }catch(e){}
+      try{
+        var parsed = JSON.parse(cached);
+        // Only use cache if it actually has data
+        if(parsed && parsed.garnish && parsed.garnish.length > 0){
+          renderOptions(parsed);
+          return;
+        }
+      }catch(e){}
+      // Bad cache — remove it
+      sessionStorage.removeItem(SS_KEY);
     }
   }
 
   showOptionsLoading(true);
   try{
-    const opts = await gasCall({action:'get_options'});
+    var opts = await gasCall({action:'get_options'});
+
+    // Validate response has real data
+    if(!opts || !opts.garnish || opts.garnish.length === 0){
+      throw new Error('Sheet returned empty options. It may still be creating — wait 10 seconds and retry.');
+    }
+
+    // Cache only valid responses
     sessionStorage.setItem(SS_KEY, JSON.stringify(opts));
     renderOptions(opts);
   }catch(err){
+    showOptionsLoading(false);
+    document.getElementById('garnish-loading').style.display='flex';
     document.getElementById('garnish-loading').innerHTML =
-      `<span style="font-size:0.7rem;color:#dc2626;">Failed to load options: ${err.message}. <a href="#" onclick="loadOptions(true);return false;" style="color:var(--gold);">Retry</a></span>`;
+      '<span style="font-size:0.7rem;color:#dc2626;line-height:1.6;">'
+      + 'Could not load options: ' + err.message
+      + '<br><a href="#" onclick="loadOptions(true);return false;" '
+      + 'style="color:var(--gold);font-family:'Space Mono',monospace;font-size:0.5rem;letter-spacing:1px;">↻ Retry</a></span>';
+    return;
   }
   showOptionsLoading(false);
 }
 
 function showOptionsLoading(on){
-  document.getElementById('garnish-loading').style.display = on ? 'flex':'none';
+  var el = document.getElementById('garnish-loading');
+  if(on){
+    el.style.display='flex';
+    el.innerHTML = '<div class="mini-spinner"></div><span class="options-loading-text">Loading from sheet…</span>';
+  } else {
+    el.style.display='none';
+  }
 }
 
 function renderOptions(opts){
   // ── Crockery select ──
-  const crockSel = document.getElementById('crockery');
-  crockSel.innerHTML = opts.crockeries.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join('');
+  var crockSel = document.getElementById('crockery');
+  crockSel.innerHTML = opts.crockeries.map(function(c){ return '<option value="'+esc(c)+'">'+esc(c)+'</option>'; }).join('');
 
   // ── Sauce select ──
-  const sauceSel = document.getElementById('sauce');
+  var sauceSel = document.getElementById('sauce');
   sauceSel.innerHTML = '<option value="None">None</option>' +
-    opts.sauces.map(s=>`<option value="${esc(s)}">${esc(s)}</option>`).join('');
+    opts.sauces.map(function(s){ return '<option value="'+esc(s)+'">'+esc(s)+'</option>'; }).join('');
 
   // ── Garnish groups ──
-  const container = document.getElementById('garnish-groups');
-  container.innerHTML = opts.garnish.map(group=>`
-    <div class="garnish-group">
-      <p class="garnish-group-title">${esc(group.category)}</p>
-      <div class="garnish-grid">
-        ${group.items.map(item=>`
-          <label class="chk-item">
-            <input type="checkbox" value="${esc(item)}" class="gc">
-            <span>${esc(item)}</span>
-          </label>`).join('')}
-      </div>
-    </div>`).join('');
+  var container = document.getElementById('garnish-groups');
+  container.innerHTML = opts.garnish.map(function(group){
+    return '<div class="garnish-group">'
+      + '<p class="garnish-group-title">'+esc(group.category)+'</p>'
+      + '<div class="garnish-grid">'
+      + group.items.map(function(item){
+          return '<label class="chk-item">'
+            + '<input type="checkbox" value="'+esc(item)+'" class="gc">'
+            + '<span>'+esc(item)+'</span>'
+            + '</label>';
+        }).join('')
+      + '</div></div>';
+  }).join('');
+
+  // Show sheet edit link if URL returned
+  if(opts.sheetUrl) showSheetLink(opts.sheetUrl);
 
   document.getElementById('garnish-loading').style.display='none';
 }
